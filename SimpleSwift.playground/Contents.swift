@@ -1,11 +1,87 @@
 print("Welcome to the UW Calculator Playground")
 
 func calculate(_ args: [String]) -> Int {
-    return -1
+    if args.count == 1 {
+        return 0
+    }
+    else {
+        let operand = args[1]
+        
+        switch operand {
+        case "+":
+            return Int(args[0])! + Int(args[2])!
+        case "-":
+            return Int(args[0])! - Int(args[2])!
+        case "/":
+            return Int(args[0])! / Int(args[2])!
+        case "%":
+            return Int(args[0])! % Int(args[2])!
+        case "*":
+            return Int(args[0])! * Int(args[2])!
+        default:
+            let calculation = args[args.count - 1]
+            
+            switch calculation {
+            case "count":
+                return args.count - 1
+            case "avg":
+                var avg = 0
+                for index in 0...args.count - 2 {
+                    avg += Int(args[index])!
+                }
+                return avg / (args.count - 1)
+            case "fact":
+                var fact = Int(args[0])!
+                if fact == 0 || fact == 1 {
+                    return 1
+                }
+                for index in 1...(fact - 1) {
+                    fact *= (Int(args[0])! - index)
+                }
+                return fact
+            default:
+                return 0
+            }
+        }
+    }
 }
 
 func calculate(_ arg: String) -> Int {
-    return -1
+    var equation = arg
+    if equation.hasSuffix("count") {
+        return ((equation.count - 5) / 2)
+    }
+    else if equation.hasSuffix("avg") {
+        var avg = 0
+        for _ in 1...((arg.count - 3) / 2) {
+            let char = equation.removeFirst()
+            avg += (char.wholeNumberValue)!
+            equation.removeFirst()
+        }
+        return (avg / ((arg.count - 3) / 2))
+    }
+    else if equation.hasSuffix("fact") {
+        let char = equation.removeFirst()
+        var fact = (char.wholeNumberValue)!
+        for index in 1...(fact - 1) {
+            fact *= ((char.wholeNumberValue)! - index)
+        }
+        return fact
+    }
+    else {
+        if arg.contains("+") {
+            return (arg.first?.wholeNumberValue)! + (arg.last?.wholeNumberValue)!
+        }
+        else if arg.contains("-") {
+            return (arg.first?.wholeNumberValue)! - (arg.last?.wholeNumberValue)!
+        }
+        else if arg.contains("*") {
+            return (arg.first?.wholeNumberValue)! * (arg.last?.wholeNumberValue)!
+        }
+        else {
+            return (arg.first?.wholeNumberValue)! / (arg.last?.wholeNumberValue)!
+        }
+    }
 }
 
 // -------------------------------------------
